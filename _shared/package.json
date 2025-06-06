@@ -1,0 +1,9 @@
+{
+  "name": "hawk-keycloak-themes",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "dependencies": {
+    "@hawk-hhg/svelte-components": "^0.10.0"
+  }
+}

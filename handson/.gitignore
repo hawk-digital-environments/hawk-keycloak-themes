@@ -1,0 +1,9 @@
+*
+!.gitignore
+!hawk-logo.ftl
+!hawk-title.ftl
+!login
+!login/resources
+!login/resources/local
+!login/resources/local/**
+!login/resources/local/**/*
