@@ -23,3 +23,10 @@ To build the themes, simply run the following command in the root of the reposit
 ```
 
 This will populate the theme directories with the necessary files.
+
+### Structure
+
+- **_shared/** contains common templates, styles, and assets used by all themes. This helps avoid duplication and ensures consistency across different theme variants.
+- **_shared/package.json** defines dependencies required for building and maintaining the shared theme resources. The key dependency, `@hawk-hhg/svelte-components`, provides reusable Svelte UI components that are integrated into the theme templates for a consistent user experience.
+- **handson/** and **hawk/** are individual theme directories. Each contains overrides and customizations specific to that theme, such as unique templates, styles, and images. These directories inherit shared resources from _shared but can provide their own versions of files as needed.
+- **build.sh** is a build script that assembles the final theme directories. It combines the shared partials from _shared with theme-specific files, then packages each theme into a .tar.gz archive for easy distribution and deployment to Keycloak.
