@@ -1,2 +1,7 @@
 node_modules
 *-theme.tar.gz
+theme/base/*
+theme/keycloak/*
+theme/keycloak.v2/*
+META-INF
+org.keycloak.keycloak-themes-*.jar

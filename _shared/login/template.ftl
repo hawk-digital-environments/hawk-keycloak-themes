@@ -19,23 +19,10 @@
         <link rel="stylesheet" href="${url.resourcesPath}/components/css/theme.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/local/css/style.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/vendor/patternfly-v4/patternfly.min.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/lib/pficon/pficon.css"/>
         <script src="${url.resourcesPath}/components/js/svelte-components.js" type="module"></script>
-        <#-- @todo check if we need those or if we do not want to allow this feature? -->
-        <#--    <#if properties.stylesCommon?has_content>-->
-        <#--        <#list properties.stylesCommon?split(' ') as style>-->
-        <#--            <link href="${url.resourcesCommonPath}/${style}" rel="stylesheet" />-->
-        <#--        </#list>-->
-        <#--    </#if>-->
-        <#--    <#if properties.styles?has_content>-->
-        <#--        <#list properties.styles?split(' ') as style>-->
-        <#--            <link href="${url.resourcesPath}/${style}" rel="stylesheet" />-->
-        <#--        </#list>-->
-        <#--    </#if>-->
-        <#--    <#if properties.scripts?has_content>-->
-        <#--        <#list properties.scripts?split(' ') as script>-->
-        <#--            <script src="${url.resourcesPath}/${script}" type="text/javascript"></script>-->
-        <#--        </#list>-->
-        <#--    </#if>-->
+
         <script type="importmap">
             {
                 "imports": {
@@ -125,39 +112,15 @@
                         <#nested "header">
                         <br/>
                     <#else>
-                        <#if displayRequiredFields>
-                            <div class="${properties.kcContentWrapperClass!}">
-                                <div class="${properties.kcLabelWrapperClass!} subtitle">
-                                    <span class="subtitle"><span
-                                                class="required">*</span> ${msg("requiredFields")}</span>
-                                </div>
-                                <div class="col-md-10">
-                                    <#nested "show-username">
-                                    <div id="kc-username" class="${properties.kcFormGroupClass!}">
-                                        <label id="kc-attempted-username">${auth.attemptedUsername}</label>
-                                        <a id="reset-login" href="${url.loginRestartFlowUrl}"
-                                           aria-label="${msg("restartLoginTooltip")}">
-                                            <div class="kc-login-tooltip">
-                                                <i class="${properties.kcResetFlowIcon!}"></i>
-                                                <span class="kc-tooltip-text">${msg("restartLoginTooltip")}</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <#else>
-                            <#nested "show-username">
-                            <div id="kc-username" class="${properties.kcFormGroupClass!}">
-                                <label id="kc-attempted-username">${auth.attemptedUsername}</label>
-                                <a id="reset-login" href="${url.loginRestartFlowUrl}"
+                        <#nested "show-username">
+                        <div id="kc-username" class="${properties.kcFormGroupClass!}">
+                            <hawk-typo>
+                                <strong>${auth.attemptedUsername}</strong> | <a id="reset-login" href="${url.loginRestartFlowUrl}"
                                    aria-label="${msg("restartLoginTooltip")}">
-                                    <div class="kc-login-tooltip">
-                                        <i class="${properties.kcResetFlowIcon!}"></i>
-                                        <span class="kc-tooltip-text">${msg("restartLoginTooltip")}</span>
-                                    </div>
+                                    ${msg("restartLoginTooltip")}
                                 </a>
-                            </div>
-                        </#if>
+                            </hawk-typo>
+                        </div>
                     </#if>
                 </header>
                 <div id="kc-content">
@@ -174,13 +137,15 @@
                         <#nested "form">
 
                         <#if auth?has_content && auth.showTryAnotherWayLink()>
-                            <form id="kc-select-try-another-way-form" action="${url.loginAction}" method="post">
-                                <div class="${properties.kcFormGroupClass!}">
-                                    <input type="hidden" name="tryAnotherWay" value="on"/>
-                                    <a href="#" id="try-another-way"
-                                       onclick="document.forms['kc-select-try-another-way-form'].requestSubmit();return false;">${msg("doTryAnotherWay")}</a>
-                                </div>
-                            </form>
+                            <hawk-typo>
+                                <form id="kc-select-try-another-way-form" action="${url.loginAction}" method="post">
+                                    <div class="${properties.kcFormGroupClass!}">
+                                        <input type="hidden" name="tryAnotherWay" value="on"/>
+                                        <a href="#" id="try-another-way"
+                                           onclick="document.forms['kc-select-try-another-way-form'].requestSubmit();return false;">${msg("doTryAnotherWay")}</a>
+                                    </div>
+                                </form>
+                            </hawk-typo>
                         </#if>
 
                         <#nested "socialProviders">
