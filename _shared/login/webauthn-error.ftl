@@ -1,9 +1,7 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=true; section>
     <#if section = "header">
-        <hawk-typo>
-            <h2>${kcSanitize(msg("webauthn-error-title"))?no_esc}</h2>
-        </hawk-typo>
+        ${kcSanitize(msg("webauthn-error-title"))?no_esc}
     <#elseif section = "form">
 
         <script type="text/javascript">

@@ -109,7 +109,10 @@
                         <br/>
                     </#if>
                     <#if !(auth?has_content && auth.showUsername() && !auth.showResetCredentials())>
-                        <#nested "header">
+                        <hawk-typo>
+                            <h2><#nested "header"></h2>
+                        </hawk-typo>
+                        <#nested "headerNoTypo">
                         <br/>
                     <#else>
                         <#nested "show-username">
@@ -132,9 +135,13 @@
                             <hawk-typo>
                                 <span style="color: var(--clr-signal-error)">${kcSanitize(message.summary)?no_esc}</span>
                             </hawk-typo>
+                            <br>
                         </#if>
 
-                        <#nested "form">
+                        <hawk-typo>
+                            <#nested "form">
+                        </hawk-typo>
+                        <#nested "formNoTypo">
 
                         <#if auth?has_content && auth.showTryAnotherWayLink()>
                             <hawk-typo>

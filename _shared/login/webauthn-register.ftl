@@ -5,9 +5,7 @@
     <#if section = "title">
         title
     <#elseif section = "header">
-        <hawk-typo>
-            <h2>${kcSanitize(msg("webauthn-registration-title"))?no_esc}</h2>
-        </hawk-typo>
+        ${kcSanitize(msg("webauthn-registration-title"))?no_esc}
     <#elseif section = "form">
 
         <form id="register" class="${properties.kcFormClass!}" action="${url.loginAction}" method="post">

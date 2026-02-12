@@ -1,10 +1,8 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayInfo=false; section>
     <#if section = "header" || section = "show-username">
-        <#if section = "header">
-            ${msg("loginChooseAuthenticator")}
-        </#if>
-    <#elseif section = "form">
+        ${msg("loginChooseAuthenticator")}
+    <#elseif section = "formNoTypo">
             <br>
             <div class="${properties.kcSelectAuthListClass!}" style="display: flex; flex-direction: column; gap: 15px;">
                 <#list auth.authenticationSelections as authenticationSelection>

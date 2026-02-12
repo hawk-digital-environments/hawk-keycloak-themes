@@ -1,10 +1,8 @@
 <#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=false; section>
     <#if section = "header">
-        <hawk-typo>
-            <h2>${msg("deleteCredentialTitle", credentialLabel)}</h2>
-        </hawk-typo>
-    <#elseif section = "form">
+        ${msg("deleteCredentialTitle", credentialLabel)}
+    <#elseif section = "formNoTypo">
     <div id="kc-delete-text">
         <hawk-typo>
             <span>${msg("deleteCredentialMessage", credentialLabel)}</span>

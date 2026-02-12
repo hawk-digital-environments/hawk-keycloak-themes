@@ -2,9 +2,9 @@
 <#import "hawk-title.ftl" as hawkTitle>
 <#import "passkeys.ftl" as passkeys>
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username') displayInfo=(realm.password && realm.registrationAllowed && !registrationDisabled??); section>
-    <#if section = "header">
+    <#if section = "headerNoTypo">
         <@hawkTitle.content />
-    <#elseif section = "form">
+    <#elseif section = "formNoTypo">
         <div id="kc-form">
             <div id="kc-form-wrapper">
                 <#if realm.password>
