@@ -15,13 +15,6 @@
             </#list>
         </#if>
         <title>${msg("loginTitle",(realm.displayName!''))}</title>
-        <link rel="icon" href="${url.resourcesPath}/img/favicon.ico"/>
-        <link rel="stylesheet" href="${url.resourcesPath}/components/css/theme.css"/>
-        <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
-        <link rel="stylesheet" href="${url.resourcesPath}/local/css/style.css"/>
-        <link rel="stylesheet" href="${url.resourcesPath}/vendor/patternfly-v4/patternfly.min.css"/>
-        <link rel="stylesheet" href="${url.resourcesPath}/lib/pficon/pficon.css"/>
-        <script src="${url.resourcesPath}/components/js/svelte-components.js" type="module"></script>
 
         <script type="importmap">
             {
@@ -30,6 +23,13 @@
             }
         }
         </script>
+        <link rel="icon" href="${url.resourcesPath}/img/favicon.ico"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/components/css/theme.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/local/css/style.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/vendor/patternfly-v4/patternfly.min.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/lib/pficon/pficon.css"/>
+        <script src="${url.resourcesPath}/components/js/svelte-components.js" type="module"></script>
         <script src="${url.resourcesPath}/js/menu-button-links.js" type="module"></script>
         <#if scripts??>
             <#list scripts as script>
