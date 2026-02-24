@@ -5,13 +5,16 @@ html {
 body {
     height: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.hawk-body {
+.hawk-main {
     padding: 60px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    flex-grow: 1;
 }
 
 .hawk-logos {
@@ -63,7 +66,7 @@ body {
 }
 
 @media (max-width: 600px){
-    .hawk-body {
+    .hawk-main {
         padding: 30px;
     }
 
@@ -79,7 +82,7 @@ body {
         height: 50px;
     }
 
-    .hawk-body {
+    .hawk-main {
         padding: 25px;
     }
 

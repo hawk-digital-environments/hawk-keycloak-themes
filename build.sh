@@ -42,6 +42,8 @@ function makeLoginTheme() {
   mkdir -p "${component_css_dir}"
   cp -r "${component_src_dir}/_custom-elements/." "${component_js_dir}"
   cp "${component_src_dir}/_themes/theme-${theme}-reset.css" "${component_css_dir}/theme.css"
+  cp "${component_src_dir}/_custom-elements/custom-elements-fouc.css" "${component_css_dir}/custom-elements-fouc.css"
+
 }
 
 function npmInstall() {

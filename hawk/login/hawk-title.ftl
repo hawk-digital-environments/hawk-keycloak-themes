@@ -1,3 +1,3 @@
 <#macro content>
-    <hawk-headline tag="h1" size="xl">${msg("loginAccountTitle")}</hawk-headline>
+    <hawk-headline tag="h1" size="m">${msg("loginAccountTitle")}</hawk-headline>
 </#macro>

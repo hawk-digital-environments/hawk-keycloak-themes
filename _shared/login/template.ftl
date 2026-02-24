@@ -25,11 +25,12 @@
         </script>
         <link rel="icon" href="${url.resourcesPath}/img/favicon.ico"/>
         <link rel="stylesheet" href="${url.resourcesPath}/components/css/theme.css"/>
+        <link rel="stylesheet" href="${url.resourcesPath}/components/css/custom-elements-fouc.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/css/style.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/local/css/style.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/vendor/patternfly-v4/patternfly.min.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/lib/pficon/pficon.css"/>
-        <script src="${url.resourcesPath}/components/js/svelte-components.js" type="module"></script>
+        <script src="${url.resourcesPath}/components/js/custom-elements.js" type="module"></script>
         <script src="${url.resourcesPath}/js/menu-button-links.js" type="module"></script>
         <#if scripts??>
             <#list scripts as script>
@@ -78,99 +79,111 @@
     </head>
 
     <body class="hawk-body" data-page-id="login-${pageId}">
+        <main class="hawk-main ${bodyClass}">
+            <div class="hawk-logos">
+                <a href="https://hawk.de" target="_blank" rel="noreferrer,noopener"title="${msg("logoHawk")}">
+                    <img src="${url.resourcesPath}/img/logo-hawk.png" alt="${msg("logoHawk")}" class="hawk-logos-logo" />
+                </a>
+                <@hawkLogos.content />
+            </div>
 
-    <div class="hawk-logos">
-        <a href="https://hawk.de" target="_blank" rel="noreferrer,noopener"title="${msg("logoHawk")}">
-            <img src="${url.resourcesPath}/img/logo-hawk.png" alt="${msg("logoHawk")}" class="hawk-logos-logo" />
-        </a>
-        <@hawkLogos.content />
-    </div>
-
-    <div class="hawk-login-wrap">
-        <div class="hawk-login-container">
-            <div class="${properties.kcFormCardClass!}">
-                <header class="${properties.kcFormHeaderClass!}">
-                    <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
-                        <hawk-select
-                                id="language-switch"
-                                label="${msg("languageSwitch")}"
-                                block="true">
-                            <#assign i = 1>
-                            <#list locale.supported as l>
-                                <option value="${l.url}" <#if l.languageTag == locale.currentLanguageTag>selected</#if>>${l.label}</option>
-                                <#assign i++>
-                            </#list>
-                        </hawk-select>
-                        <script>
-                            document.getElementById("language-switch").addEventListener("change", function (e) {
-                                window.location.href = e.detail.value;
-                            });
-                        </script>
-                        <br/>
-                    </#if>
-                    <#if !(auth?has_content && auth.showUsername() && !auth.showResetCredentials())>
-                        <hawk-typo>
-                            <h2><#nested "header"></h2>
-                        </hawk-typo>
-                        <#nested "headerNoTypo">
-                        <br/>
-                    <#else>
-                        <#nested "show-username">
-                        <div id="kc-username" class="${properties.kcFormGroupClass!}">
-                            <hawk-typo>
-                                <strong>${auth.attemptedUsername}</strong> | <a id="reset-login" href="${url.loginRestartFlowUrl}"
-                                   aria-label="${msg("restartLoginTooltip")}">
-                                    ${msg("restartLoginTooltip")}
-                                </a>
-                            </hawk-typo>
-                        </div>
-                    </#if>
-                </header>
-                <div id="kc-content">
-                    <div id="kc-content-wrapper">
-
-                        <#-- App-initiated actions should not see warning messages about the need to complete the action -->
-                        <#-- during login.                                                                               -->
-                        <#if displayMessage && message?has_content && (message.type != 'warning' || !isAppInitiatedAction??)>
-                            <hawk-typo>
-                                <span style="color: var(--clr-signal-error)">${kcSanitize(message.summary)?no_esc}</span>
-                            </hawk-typo>
-                            <br>
-                        </#if>
-
-                        <hawk-typo>
-                            <#nested "form">
-                        </hawk-typo>
-                        <#nested "formNoTypo">
-
-                        <#if auth?has_content && auth.showTryAnotherWayLink()>
-                            <hawk-typo>
-                                <form id="kc-select-try-another-way-form" action="${url.loginAction}" method="post">
-                                    <div class="${properties.kcFormGroupClass!}">
-                                        <input type="hidden" name="tryAnotherWay" value="on"/>
-                                        <a href="#" id="try-another-way"
-                                           onclick="document.forms['kc-select-try-another-way-form'].requestSubmit();return false;">${msg("doTryAnotherWay")}</a>
-                                    </div>
-                                </form>
-                            </hawk-typo>
-                        </#if>
-
-                        <#nested "socialProviders">
-
-                        <#if displayInfo>
-                            <div id="kc-info" class="${properties.kcSignUpClass!}">
-                                <div id="kc-info-wrapper" class="${properties.kcInfoAreaWrapperClass!}">
-                                    <#nested "info">
+            <div class="hawk-login-wrap">
+                <div class="hawk-login-container">
+                    <div class="${properties.kcFormCardClass!}">
+                        <header class="${properties.kcFormHeaderClass!}">
+                            <#if realm.internationalizationEnabled  && locale.supported?size gt 1>
+                                <hawk-select
+                                        id="language-switch"
+                                        label="${msg("languageSwitch")}"
+                                        block="true">
+                                    <#assign i = 1>
+                                    <#list locale.supported as l>
+                                        <option value="${l.url}" <#if l.languageTag == locale.currentLanguageTag>selected</#if>>${l.label}</option>
+                                        <#assign i++>
+                                    </#list>
+                                </hawk-select>
+                                <script>
+                                    document.getElementById("language-switch").addEventListener("change", function (e) {
+                                        window.location.href = e.detail.value;
+                                    });
+                                </script>
+                                <br/>
+                            </#if>
+                            <#if !(auth?has_content && auth.showUsername() && !auth.showResetCredentials())>
+                                <hawk-typo>
+                                    <h2><#nested "header"></h2>
+                                </hawk-typo>
+                                <#nested "headerNoTypo">
+                                <br/>
+                            <#else>
+                                <#nested "show-username">
+                                <div id="kc-username" class="${properties.kcFormGroupClass!}">
+                                    <hawk-typo>
+                                        <strong>${auth.attemptedUsername}</strong> | <a id="reset-login" href="${url.loginRestartFlowUrl}"
+                                           aria-label="${msg("restartLoginTooltip")}">
+                                            ${msg("restartLoginTooltip")}
+                                        </a>
+                                    </hawk-typo>
                                 </div>
+                            </#if>
+                        </header>
+                        <div id="kc-content">
+                            <div id="kc-content-wrapper">
+
+                                <#-- App-initiated actions should not see warning messages about the need to complete the action -->
+                                <#-- during login.                                                                               -->
+                                <#if displayMessage && message?has_content && (message.type != 'warning' || !isAppInitiatedAction??)>
+                                    <hawk-typo>
+                                        <span style="color: var(--clr-signal-error)">${kcSanitize(message.summary)?no_esc}</span>
+                                    </hawk-typo>
+                                    <br>
+                                </#if>
+
+                                <hawk-typo>
+                                    <#nested "form">
+                                </hawk-typo>
+                                <#nested "formNoTypo">
+
+                                <#if auth?has_content && auth.showTryAnotherWayLink()>
+                                    <hawk-typo>
+                                        <form id="kc-select-try-another-way-form" action="${url.loginAction}" method="post">
+                                            <div class="${properties.kcFormGroupClass!}">
+                                                <input type="hidden" name="tryAnotherWay" value="on"/>
+                                                <a href="#" id="try-another-way"
+                                                   onclick="document.forms['kc-select-try-another-way-form'].requestSubmit();return false;">${msg("doTryAnotherWay")}</a>
+                                            </div>
+                                        </form>
+                                    </hawk-typo>
+                                </#if>
+
+                                <#nested "socialProviders">
+
+                                <#if displayInfo>
+                                    <div id="kc-info" class="${properties.kcSignUpClass!}">
+                                        <div id="kc-info-wrapper" class="${properties.kcInfoAreaWrapperClass!}">
+                                            <#nested "info">
+                                        </div>
+                                    </div>
+                                </#if>
                             </div>
-                        </#if>
+                        </div>
+
+                        <@loginFooter.content/>
                     </div>
                 </div>
-
-                <@loginFooter.content/>
             </div>
-        </div>
-    </div>
+        </main>
+        <hawk-footer>
+            <ul>
+                <#list 0..(properties.footer_link_count?number - 1) as index>
+                    <li>
+                        <a href="${msg('footer_' + index + '_link')!}" target="_blank" rel="noreferrer noopener">
+                            ${msg('footer_' + index + '_text')!}
+                        </a>
+                    </li>
+                </#list>
+            </ul>
+        </hawk-footer>
     </body>
     </html>
 </#macro>
