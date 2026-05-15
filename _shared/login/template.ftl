@@ -31,6 +31,51 @@
         <link rel="stylesheet" href="${url.resourcesPath}/vendor/patternfly-v4/patternfly.min.css"/>
         <link rel="stylesheet" href="${url.resourcesPath}/lib/pficon/pficon.css"/>
         <script src="${url.resourcesPath}/components/js/custom-elements.js" type="module"></script>
+        <script>
+            (function () {
+                var requiredElements = [
+                    "hawk-button",
+                    "hawk-checkbox",
+                    "hawk-input",
+                    "hawk-input-password"
+                ];
+
+                function enableFallbacks() {
+                    if (document.documentElement.className.indexOf("hawk-custom-elements-failed") === -1) {
+                        document.documentElement.className += " hawk-custom-elements-failed";
+                    }
+
+                    var fields = document.querySelectorAll("[data-fallback-name]");
+
+                    for (var index = 0; index < fields.length; index++) {
+                        fields[index].setAttribute("name", fields[index].getAttribute("data-fallback-name"));
+                        fields[index].disabled = false;
+                    }
+                }
+
+                function checkCustomElements() {
+                    if (!("customElements" in window)) {
+                        enableFallbacks();
+                        return;
+                    }
+
+                    window.setTimeout(function () {
+                        for (var index = 0; index < requiredElements.length; index++) {
+                            if (document.querySelector(requiredElements[index]) && !customElements.get(requiredElements[index])) {
+                                enableFallbacks();
+                                return;
+                            }
+                        }
+                    }, 1500);
+                }
+
+                if (document.readyState === "loading") {
+                    document.addEventListener("DOMContentLoaded", checkCustomElements);
+                } else {
+                    checkCustomElements();
+                }
+            }());
+        </script>
         <script src="${url.resourcesPath}/js/menu-button-links.js" type="module"></script>
         <#if scripts??>
             <#list scripts as script>

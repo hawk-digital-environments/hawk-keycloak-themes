@@ -8,8 +8,9 @@
         <div id="kc-form">
             <div id="kc-form-wrapper">
                 <#if realm.password>
-                    <form id="kc-form-login" onsubmit="login.disabled = true; return true;" action="${url.loginAction}"
+                    <form id="kc-form-login" onsubmit="var button = this.querySelector('[name=login]'); if (button) button.setAttribute('disabled', 'true'); return true;" action="${url.loginAction}"
                           method="post">
+                        <hawk-formwrap>
                             <#if !usernameHidden??>
                                 <hawk-input
                                         id="username"
@@ -22,6 +23,24 @@
                                         <#if messagesPerField.existsError('username','password')>error="${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}"</#if>
                                 >
                                 </hawk-input>
+                                <div class="hawk-native-fallback">
+                                    <label for="username-fallback">
+                                        <#if !realm.loginWithEmailAllowed>${msg("username")}<#elseif !realm.registrationEmailAsUsername>${msg("usernameOrEmail")}<#else>${msg("email")}</#if>
+                                    </label>
+                                    <input
+                                            id="username-fallback"
+                                            data-fallback-name="username"
+                                            value="${(login.username!'')}"
+                                            autocomplete="username"
+                                            <#if messagesPerField.existsError('username','password')>aria-invalid="true"</#if>
+                                            disabled
+                                    />
+                                    <#if messagesPerField.existsError('username','password')>
+                                        <span class="hawk-native-fallback-error">
+                                            ${kcSanitize(messagesPerField.getFirstError('username','password'))?no_esc}
+                                        </span>
+                                    </#if>
+                                </div>
                             </#if>
 
                             <div>
@@ -31,6 +50,16 @@
                                             checked="<#if login.rememberMe??>true<#else>false</#if>"
                                             id="rememberMe"
                                             name="rememberMe"></hawk-checkbox>
+                                    <label class="hawk-native-fallback hawk-native-fallback-checkbox" for="rememberMe-fallback">
+                                        <input
+                                                id="rememberMe-fallback"
+                                                type="checkbox"
+                                                data-fallback-name="rememberMe"
+                                                <#if login.rememberMe??>checked</#if>
+                                                disabled
+                                        />
+                                        <span>${msg("rememberMe")}</span>
+                                    </label>
                                 </#if>
 
                                 <#if realm.resetPasswordAllowed>
@@ -52,6 +81,9 @@
                                         value="${msg("doLogIn")}"
                                         submit="true"
                                 >${msg("doLogIn")}</hawk-button>
+                                <button class="hawk-native-fallback hawk-native-fallback-button" type="submit" data-fallback-name="login" value="${msg("doLogIn")}" disabled>
+                                    ${msg("doLogIn")}
+                                </button>
                             </div>
 
                         </hawk-formwrap>
