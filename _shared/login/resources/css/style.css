@@ -117,3 +117,79 @@ body {
 .hawk-custom-element li p:not(:last-child):not(:empty) {
     margin-bottom: 5px
 }
+
+.hawk-native-fallback {
+    display: none;
+}
+
+.hawk-custom-elements-failed hawk-input,
+.hawk-custom-elements-failed hawk-input-password,
+.hawk-custom-elements-failed hawk-checkbox,
+.hawk-custom-elements-failed hawk-button {
+    display: none !important;
+}
+
+.hawk-custom-elements-failed hawk-formwrap,
+.hawk-custom-elements-failed hawk-typo {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback label,
+.hawk-custom-elements-failed label.hawk-native-fallback {
+    color: var(--clr-text, #1f1f1f);
+    font-weight: 600;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback input {
+    border: 1px solid var(--clr-border, #757575);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font: inherit;
+    min-height: 44px;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback input[aria-invalid="true"] {
+    border-color: var(--clr-signal-error, #b00020);
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback-checkbox {
+    align-items: center;
+    flex-direction: row;
+    font-weight: 400;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback-checkbox input {
+    min-height: auto;
+    width: auto;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback-button {
+    align-items: center;
+    background: var(--clr-primary, #005aa9);
+    border: 0;
+    border-radius: 4px;
+    color: var(--clr-primary-contrast, #fff);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    justify-content: center;
+    min-height: 48px;
+    padding: 10px 16px;
+    width: 100%;
+}
+
+.hawk-custom-elements-failed .hawk-native-fallback-error {
+    color: var(--clr-signal-error, #b00020);
+    font-size: 0.9rem;
+}
